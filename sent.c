@@ -19,6 +19,10 @@
 #include <X11/Xutil.h>
 #include <X11/Xft/Xft.h>
 
+#include <cairo/cairo.h>
+#include <cairo/cairo-xlib.h>
+#include <cairo/cairo-pdf.h>
+
 #include "arg.h"
 #include "util.h"
 #include "drw.h"
@@ -97,6 +101,7 @@ static void cleanup(int slidesonly);
 static void reload(const Arg *arg);
 static void load(FILE *fp);
 static void advance(const Arg *arg);
+static void pdf();
 static void quit(const Arg *arg);
 static void resize(int width, int height);
 static void run();
@@ -473,6 +478,36 @@ advance(const Arg *arg)
 		idx = new_idx;
 		xdraw();
 	}
+}
+
+void
+pdf()
+{
+	const Arg next = { .i = 1 };
+	const Arg first = { .i = -(slidecount-1) };
+	cairo_surface_t *cs;
+
+	char filename[20];
+	sprintf(filename, "%s.pdf", fname);
+	cairo_surface_t *pdf = cairo_pdf_surface_create(filename, xw.w, xw.h);
+
+	cairo_t *cr = cairo_create(pdf);
+
+	idx = -1;
+	for (int i = 0; i < slidecount; ++i) {
+		cs = cairo_xlib_surface_create(xw.dpy, xw.win, xw.vis, xw.w, xw.h);
+		advance(&next);
+		cairo_set_source_surface(cr, cs, 0.0, 0.0);
+		cairo_paint(cr);
+		cairo_show_page(cr);
+	}
+
+	// FIXME: after running this function and quitting,
+	//        sent segfaults and one of these might be the culprit idk
+	cairo_destroy(cr);
+	cairo_surface_destroy(cs);
+	cairo_surface_destroy(pdf);
+	advance(&first);
 }
 
 void
