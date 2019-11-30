@@ -500,12 +500,10 @@ pdf()
 		cairo_set_source_surface(cr, cs, 0.0, 0.0);
 		cairo_paint(cr);
 		cairo_show_page(cr);
+		cairo_surface_destroy(cs);
 	}
 
-	// FIXME: after running this function and quitting,
-	//        sent segfaults and one of these might be the culprit idk
 	cairo_destroy(cr);
-	cairo_surface_destroy(cs);
 	cairo_surface_destroy(pdf);
 	advance(&first);
 }
