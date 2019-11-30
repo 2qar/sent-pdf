@@ -5,7 +5,8 @@ I made this so I don't have to take my laptop to school to give a presentation w
 
 Press 'g' (preferably while fullscreen) and sent will flip through all of your slides and spit them out as a PDF.
 
-####Dependencies:
+Dependencies
+
 * Xlib
 * Xft
 * cairo
