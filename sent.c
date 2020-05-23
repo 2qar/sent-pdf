@@ -487,7 +487,7 @@ pdf()
 	const Arg first = { .i = -(slidecount-1) };
 	cairo_surface_t *cs;
 
-	char filename[20];
+	char filename[strlen(fname) + 5];
 	sprintf(filename, "%s.pdf", fname);
 	cairo_surface_t *pdf = cairo_pdf_surface_create(filename, xw.w, xw.h);
 
