@@ -484,7 +484,7 @@ void
 pdf()
 {
 	const Arg next = { .i = 1 };
-	const Arg first = { .i = -(slidecount-1) };
+	Arg first;
 	cairo_surface_t *cs;
 
 	char filename[strlen(fname) + 5];
@@ -493,18 +493,20 @@ pdf()
 
 	cairo_t *cr = cairo_create(pdf);
 
-	idx = -1;
+	first.i = -idx;
+	advance(&first);
 	for (int i = 0; i < slidecount; ++i) {
 		cs = cairo_xlib_surface_create(xw.dpy, xw.win, xw.vis, xw.w, xw.h);
-		advance(&next);
 		cairo_set_source_surface(cr, cs, 0.0, 0.0);
 		cairo_paint(cr);
 		cairo_show_page(cr);
 		cairo_surface_destroy(cs);
+		advance(&next);
 	}
 
 	cairo_destroy(cr);
 	cairo_surface_destroy(pdf);
+	first.i = -(slidecount-1);
 	advance(&first);
 }
 
