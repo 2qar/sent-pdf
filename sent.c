@@ -495,14 +495,17 @@ pdf()
 
 	first.i = -idx;
 	advance(&first);
+
+	cs = cairo_xlib_surface_create(xw.dpy, xw.win, xw.vis, xw.w, xw.h);
+	cairo_set_source_surface(cr, cs, 0.0, 0.0);
 	for (int i = 0; i < slidecount; ++i) {
-		cs = cairo_xlib_surface_create(xw.dpy, xw.win, xw.vis, xw.w, xw.h);
-		cairo_set_source_surface(cr, cs, 0.0, 0.0);
 		cairo_paint(cr);
 		cairo_show_page(cr);
-		cairo_surface_destroy(cs);
+		cairo_surface_flush(cs);
 		advance(&next);
+		cairo_surface_mark_dirty(cs);
 	}
+	cairo_surface_destroy(cs);
 
 	cairo_destroy(cr);
 	cairo_surface_destroy(pdf);
