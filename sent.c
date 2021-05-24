@@ -487,6 +487,9 @@ pdf()
 	Arg first;
 	cairo_surface_t *cs;
 
+	if (!fname)
+		fname = "slides";
+
 	char filename[strlen(fname) + 5];
 	sprintf(filename, "%s.pdf", fname);
 	cairo_surface_t *pdf = cairo_pdf_surface_create(filename, xw.w, xw.h);
