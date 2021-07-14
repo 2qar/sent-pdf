@@ -47,7 +47,7 @@ static Shortcut shortcuts[] = {
 	{ XK_n,           advance,        {.i = +1} },
 	{ XK_p,           advance,        {.i = -1} },
 	{ XK_r,           reload,         {0} },
-	{ XK_g,           pdf,           {0} },
+	{ XK_g,           pdf,            {0} },
 };
 
 static Filter filters[] = {
