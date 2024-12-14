@@ -1,11 +1,14 @@
 # sent-pdf
-PDF sucks, but so does school.
 
-I made this so I don't have to take my laptop to school to give a presentation with sent.
+[sent](https://tools.suckless.org/sent/) is a convenient tool for making simple presentations, but it doesn't provide any export functionality.
 
-Press 'g' (preferably while fullscreen) and sent will flip through all of your slides and spit them out as a PDF.
+This fork allows you to export your slides to PDF.
 
-Dependencies
+## Usage
+
+Press 'g' and sent will flip through all of your slides and generate a PDF. Note that slide sizes will be based on the window size.
+
+## Dependencies
 
 * Xlib
 * Xft
